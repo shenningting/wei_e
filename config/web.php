@@ -3,7 +3,7 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'defaultRoute'=>'login',
+    'defaultRoute'=>'install/index',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -23,11 +23,26 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+           'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            //'viewPath' => 'views\mail',
+            'useFileTransport' => false,
+            //'class' => 'yii\swiftmailer\Mailer',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.163.com',
+                'username' => 'm18612193548@163.com',
+                'password' => 'n1234567890',
+                'port' => '25',
+                'encryption' => null,
+
+            ],
+            'messageConfig'=>[
+                'charset'=>'UTF-8',
+                'from'=>['m18612193548@163.com'=>'admin']
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
