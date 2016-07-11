@@ -78,7 +78,11 @@ function menuScroll(num){
               <a href="3" id="out">&nbsp;</a>
             </div>
             <div class="info_center">
-              admin
+              <?php
+              $session = \YII::$app->session;
+              $session->open();
+              echo $session->get('uname');
+              ?>
               <span id="nt">通知</span><span><a href="#" id="notice">3</a></span>
             </div>
           </div>
