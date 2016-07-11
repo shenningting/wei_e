@@ -14,7 +14,7 @@ class InstallController extends \yii\web\Controller
     public function actionIndex(){
        //安装界面如果安装好之后生成一个php文件 文件如果存在则跳到登录界面
         if(is_file("assets/existence.php")){
-            $this->redirect(array('/login/login'));
+            $this->redirect(array('/login/index'));
         }else{
             return $this->renderPartial("one");
         }
@@ -77,7 +77,7 @@ class InstallController extends \yii\web\Controller
             fclose($fopen);
             $strs=str_replace("//'db' => require(__DIR__ . '/db.php'),","'db' => require(__DIR__ . '/db.php'),",file_get_contents("../config/web.php"));
             file_put_contents("../config/web.php",$strs);
-            $this->redirect(array('/login/login'));
+            $this->redirect(array('/login/index'));
         }else{
             echo "<script>
                         if(alert('数据库账号或密码错误')){

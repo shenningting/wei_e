@@ -32,7 +32,7 @@
 					<div id="btn_area">
 						<input type="submit" id="sub_btn" value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
 						<input type="text" class="verify">
-						<img src="index.php?r=login/captcha" alt="点我换一张" title="点我换一张" width="80" height="40" onlick="verf(this)">
+						<img src="index.php?r=login/captcha" alt="点我换一张" title="点我换一张" width="80" height="40" onclick=this.src="index.php?r=login/captcha&rand="+Math.random(1000,9999)>
                         <button class="忘记密码">忘记密码</button>
 					</div>
 				</form>
