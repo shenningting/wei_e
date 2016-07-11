@@ -4,13 +4,15 @@
 	<meta charset="UTF-8">
 
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/main.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
 	<title>后台登陆</title>
 </head>
 <body>
 	<div id="login_top">
 		<div id="welcome">
-			欢迎使用教学质量与教学改革工程管理系统
+			欢迎使用微信管理系统
 		</div>
 		<div id="back">
 			<a href="#">返回首页</a>&nbsp;&nbsp; | &nbsp;&nbsp;
@@ -20,16 +22,18 @@
 	<div id="login_center">
 		<div id="login_area">
 			<div id="login_form">
-				<form action="index.html" method="post">
+				<form action="index.php?r=login/login" method="post">
 					<div id="login_tip">
 						用户登录&nbsp;&nbsp;UserLogin
 					</div>
-					<div><input type="text" class="username"></div>
-					<div><input type="text" class="pwd"></div>
+                    <input type="hidden" name="_csrf" value="<?= \Yii::$app->request->csrfToken?>"/>
+					<div><input type="text" class="username" name="uname"></div>
+					<div><input type="password" class="pwd" name="upwd"></div>
 					<div id="btn_area">
-						<input type="submit" name="submit" id="sub_btn" value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
+						<input type="submit" id="sub_btn" value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
 						<input type="text" class="verify">
-						<img src="images/login/verify.png" alt="" width="80" height="40">
+						<img src="index.php?r=login/captcha" alt="点我换一张" title="点我换一张" width="80" height="40" onlick="verf(this)">
+                        <button class="忘记密码">忘记密码</button>
 					</div>
 				</form>
 			</div>
@@ -40,3 +44,9 @@
 	</div>
 </body>
 </html>
+<script src="js/jq.js"></script>
+<script>
+    function verf(obj){
+        $(obj).attr("src",'index.php?r=login/captcha');
+    }
+</script>
