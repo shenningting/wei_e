@@ -51,7 +51,7 @@ class LoginController extends Controller
                     echo "<script>alert('密码已输入超限，20秒后再来登录');location.href='index.php?r=login/index'</script>";
                 }else{
                     $session->set('num_'.$bool_uname['uid'],$num+1);
-                    echo '<script>alert("密码输入错误，还剩'.(2-$num).'次");location.href="index.php?r=login/index"</script>';
+                    echo '<script>alert("密码输入错误啊，还剩'.(2-$num).'次");location.href="index.php?r=login/index"</script>';
                 }
             }
 
