@@ -30,7 +30,7 @@ class InstallController extends \yii\web\Controller
     public function actionCheck(){
         $post=\Yii::$app->request->post();
         $host=$post['dbhost'];
-        $str = explode(':',$host);
+        $host_arr = explode(':',$host);
         //print_r($str);die;
         $name=$post['dbname'];
         $pwd=$post['dbpwd'];
@@ -83,7 +83,7 @@ class InstallController extends \yii\web\Controller
                 $str="<?php
 					return [
 						'class' => 'yii\db\Connection',
-						'dsn' => 'mysql:host=".$post['dbhost'].";port=$str[1];dbname=".$post['db']."',
+						'dsn' => 'mysql:host=".$host_arr[0].";port=$host_arr[1];dbname=".$post['db']."',
 						'username' => '".$post['dbname']."',
 						'password' => '".$post['dbpwd']."',
 						'charset' => 'utf8',
@@ -92,7 +92,7 @@ class InstallController extends \yii\web\Controller
                 file_put_contents('../config/db.php',$str);
 
             $str1="<?php
-            \$pdo=new PDO('mysql:host=$host;dbname=$db','root','$pwd');
+            \$pdo=new PDO('mysql:host=$host_arr[0];dbname=$db','root','$pwd');
             ?>";
 
             file_put_contents('./assets/abc.php',$str1);
