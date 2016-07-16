@@ -1,6 +1,7 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+Yii::$classMap['Vcode'] = '@app/libs/Vcode.php';
 
 $config = [
     'defaultRoute'=>'install/index',
@@ -64,6 +65,8 @@ $config = [
         */
     ],
     'params' => $params,
+    'language' => 'zh-CN'
+
 ];
 
 if (YII_ENV_DEV) {

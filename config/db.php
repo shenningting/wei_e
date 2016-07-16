@@ -1,7 +1,7 @@
 <?php
 					return [
 						'class' => 'yii\db\Connection',
-						'dsn' => 'mysql:host=127.0.0.1;port=3306;dbname=yan',
+						'dsn' => 'mysql:host=127.0.0.1:3306;port=3306;dbname=yan',
 						'username' => 'root',
 						'password' => 'root',
 						'charset' => 'utf8',
