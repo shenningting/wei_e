@@ -28,12 +28,15 @@ class InstallController extends \yii\web\Controller
     public function actionCheck(){
         $post=\Yii::$app->request->post();
         $host=$post['dbhost'];
+        $str = explode(':',$host);
+        //print_r($str);die;
         $name=$post['dbname'];
         $pwd=$post['dbpwd'];
         $db=$post['db'];
-       $uname=$post['uname'];
-       $upwd=$post['upwd'];
-
+        $uname=$post['uname'];
+        $upwd=$post['upwd'];
+        $dbtem=$post['dbtem'];
+        //echo $name,$pwd;die;
         if (@$link= mysql_connect("$host","$name","$pwd")){
             $db_selected = mysql_select_db("$db", $link);
                 if($db_selected){
@@ -42,7 +45,7 @@ class InstallController extends \yii\web\Controller
                 }
                 $sql="create database ".$post['db'];
                 mysql_query($sql);
-                $file=file_get_contents('./assets/we3.sql');
+                $file=file_get_contents('./assets/yii.sql');
                 $arr=explode('-- ----------------------------',$file);
                 $db_selected = mysql_select_db($post['db'], $link);
                 for($i=0;$i<count($arr);$i++){
@@ -54,21 +57,40 @@ class InstallController extends \yii\web\Controller
                         }
                     }
                 }
+
+            //修改表前缀
+           if($dbtem!='we_'){
+                $user = $name;                       //数据库用户名
+                $pwd = $pwd;                         //数据库密码
+                $replace =$dbtem;                     //替换后的前缀
+                $seach = 'we_';                     //要替换的前缀
+                $link =  mysql_connect("$host","$user","$pwd");         //连接数据库
+
+//                $sql = 'SELECT TABLE_NAME,TABLE_ROWS FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='."$db".'';
+//                $result = mysql_query($sql);
+               $tables = mysql_list_tables("$db");
+               while($name = mysql_fetch_array($tables)) {
+
+                   $table = $dbtem.$name['0'];
+
+                   mysql_query("rename table $name[0] to $table");
+               }
+            }
                 $str="<?php
 					return [
 						'class' => 'yii\db\Connection',
-						'dsn' => 'mysql:host=".$post['dbhost'].";port=3306;dbname=".$post['db']."',
+						'dsn' => 'mysql:host=".$post['dbhost'].";port=$str[1];dbname=".$post['db']."',
 						'username' => '".$post['dbname']."',
 						'password' => '".$post['dbpwd']."',
 						'charset' => 'utf8',
-						'tablePrefix' => 'we_',   //加入前缀名称we_
+						'tablePrefix' => '$dbtem',   //加入前缀名称we_
 					];";
                 file_put_contents('../config/db.php',$str);
             $str1="<?php
-                \$pdo=new PDO('mysql:host= $host;port=3306;dbname=$db','$name','$pwd',array(PDO::MYSQL_ATTR_INIT_COMMAND=>'set names utf8'));
+                \$pdo=new PDO('mysql:host=$host;dbname=$db','root','$pwd');
                    ?>";
             file_put_contents('./assets/abc.php',$str1);
-               $sql="insert into we_user (uname,upwd) VALUES ('$uname','$upwd')";
+               $sql="insert into ".$dbtem."user (uname,upwd) VALUES ('$uname','$upwd')";
                 mysql_query($sql);
             mysql_close($link);
             $counter_file       =   'assets/existence.php';//文件名及路径,在当前目录下新建aa.txt文件

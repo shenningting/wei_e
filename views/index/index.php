@@ -75,7 +75,7 @@ function menuScroll(num){
             <div class="help_info">
               <a href="1" id="hp">&nbsp;</a>
               <a href="2" id="gy">&nbsp;</a>
-              <a href="3" id="out">&nbsp;</a>
+              <a href="index.php?r=login/logout" id="out">&nbsp;</a>
             </div>
             <div class="info_center">
               <?php
@@ -95,18 +95,16 @@ function menuScroll(num){
     </div>
     <div class="side">
         <div class="sideMenu" style="margin:0 auto">
-          <h3>导航菜单</h3>
+          <h3>系统设置</h3>
           <ul>
-             <li><a href="" target="_main">用户中心</a></li>
+             <li><a href="index.php?r=ip/ip_show"  target="right">ip限制</a></li>
+             <li><a href="index.php?r=ip/add_ip"  target="right">ip添加</a></li>
 
           </ul>
-          <h3> 导航菜单</h3>
+          <h3> 公众号管理</h3>
           <ul>
-            <li>导航菜单</li>
-            <li>导航菜单</li>
-            <li>导航菜单</li>
-            <li>导航菜单</li>
-            <li>导航菜单</li>
+              <li><a href="index.php?r=account/add"  target="right">添加公众号</a></li>
+              <li><a href="index.php?r=account/show"  target="right">公众号展示</a></li>
           </ul>
        </div>
     </div>

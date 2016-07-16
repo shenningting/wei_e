@@ -11,6 +11,7 @@ use yii\base\Model;
 class LoginForm extends Model
 {
     public $username;
+    public $verifyCode;
     public $password;
     public $rememberMe = true;
 
@@ -28,7 +29,7 @@ class LoginForm extends Model
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['verifyCode', 'captcha']
         ];
     }
 
@@ -74,5 +75,13 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            // 'verifyCode' => 'Verification Code',
+            'verifyCode' => '验证码',//在官网的教程里是加上了英文字母，我这里先给去掉了,这里去 掉会不会产生影响因为我还没做接收验证，只做了验证码显示的功能，你们可以自己测试下
+        ];
     }
 }

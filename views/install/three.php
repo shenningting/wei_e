@@ -36,7 +36,7 @@
 <input name="step" value="2" type="hidden">
 
 <tbody><tr><th class="tbopt">&nbsp;数据库服务器:</th>
-<td><input name="dbhost" value="127.0.0.1" size="35" class="txt" type="text"></td>
+<td><input name="dbhost" value="127.0.0.1:3306" size="35" class="txt" type="text"></td>
 <td>&nbsp;数据库服务器地址, 一般为 localhost</td>
 </tr>
 

@@ -1,3 +1,6 @@
+<?php
+use yii\captcha\Captcha;
+?>
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -31,8 +34,10 @@
 					<div><input type="password" class="pwd" name="upwd"></div>
 					<div id="btn_area">
 						<input type="submit" id="sub_btn" value="登&nbsp;&nbsp;录">&nbsp;&nbsp;
-						<input type="text" class="verify">
-						<img src="index.php?r=login/captcha" alt="点我换一张" title="点我换一张" width="80" height="40" onclick=this.src="index.php?r=login/captcha&rand="+Math.random(1000,9999)>
+						<input type="text" class="verify" name="verifyCode">
+						<!--<img src="index.php?r=login/captcha" alt="点我换一张" title="点我换一张" width="80" height="40" onclick=this.src="index.php?r=login/captcha&rand="+Math.random(1000,9999)>
+                        --><?php /*echo Captcha::widget(['name'=>'','captchaAction'=>'login/captcha','imageOptions'=>['id'=>'captchaimg', 'title'=>'换一个', 'alt'=>'换一个', 'style'=>'cursor:pointer;'],'template'=>'{image}']); */?>
+                        <img src="index.php?r=login/vcode" alt="点我换一张" title="点我换一张" width="80" height="40" onclick=this.src="index.php?r=login/vcode&rand="+Math.random(1000,9999)>
                         <button class="忘记密码">忘记密码</button>
 					</div>
 				</form>
