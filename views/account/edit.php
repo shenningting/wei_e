@@ -33,14 +33,14 @@
             <td>
                 <input type="hidden" name="aid" value="<?php echo $one_data['aid']?>"/>
                 <input class="input-text lh30" id="title" name="aname" size="50"  type="text" value="<?php echo $one_data['aname']?>">
-                <span style="color: red"><?=$error_data['aname'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))$error_data['aname'][0]?></span>
             </td>
         </tr>
         <tr>
             <th>Appid：</th>
             <td>
                 <input class="input-text lh30" name="appid" size="50" value="<?php echo $one_data['appid']?>" type="text">
-                <span style="color: red"><?=$error_data['appid'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))$error_data['appid'][0]?></span>
             </td>
 
         </tr>
@@ -48,7 +48,7 @@
             <th>Appsecret：</th>
             <td>
                 <input class="input-text lh30" name="appsecret" size="50"  value="<?php echo $one_data['appsecret']?>" type="text">
-                <span style="color: red"><?=$error_data['appsecret'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))$error_data['appsecret'][0]?></span>
             </td>
         </tr>
 
@@ -56,7 +56,7 @@
             <th><font color="red">接口地址</font>：</th>
             <td>
                 <input class="input-text lh30" name="aurl" size="50" value="<?php echo $one_data['aurl']?>" type="text">
-                <span style="color: red"><?=$error_data['aurl'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))$error_data['aurl'][0]?></span>
             </td>
 
         </tr>
@@ -64,7 +64,7 @@
             <th><font color="red">Token</font>：</th>
             <td>
                 <input class="input-text lh30" id="token" name="atoken" size="50" value="<?php echo $one_data['atoken']?>" type="text"><span style="color: blue" onclick="newToken()">生成新的</span>
-                <span style="color: red"><?=$error_data['atoken'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))$error_data['atoken'][0]?></span>
             </td>
         </tr>
 

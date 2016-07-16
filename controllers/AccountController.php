@@ -115,8 +115,9 @@ class AccountController extends Controller
             if($bool>0){
                 return $this -> redirect(array('show'));
             }else{
-                $error_data = $model -> getErrors();
-                return $this -> renderPartial('edit',['error_data'=>$error_data]);
+                $aid = \Yii::$app->request->post('aid');
+                $one_data = Account::find() -> where(['aid'=>$aid]) ->one();
+                return $this -> renderPartial('edit',['one_data'=>$one_data]);
             }
         }
     }

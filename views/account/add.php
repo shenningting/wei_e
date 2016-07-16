@@ -32,14 +32,14 @@
             <th><i class="require-red">*</i>公众号名称：</th>
             <td>
                 <input class="input-text lh30" id="title" name="aname" size="50" value="" type="text" placeholder="请输入公众号名称">
-                <span style="color: red"><?=$error_data['aname'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))echo $error_data['aname'][0]?></span>
             </td>
         </tr>
         <tr>
             <th>Appid：</th>
             <td>
                 <input class="input-text lh30" name="appid" size="50" placeholder="请输入Appid" type="text">
-                <span style="color: red"><?=$error_data['appid'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))echo $error_data['appid'][0]?></span>
             </td>
 
         </tr>
@@ -47,14 +47,14 @@
             <th>Appsecret：</th>
             <td>
                 <input class="input-text lh30" name="appsecret" size="50" placeholder="请输入appsecret" type="text">
-                <span style="color: red"><?=$error_data['appsecret'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))echo $error_data['appsecret'][0]?></span>
             </td>
         </tr>
         <tr>
             <th>内容：</th>
             <td>
                 <textarea name="account" class="common-textarea" id="content" cols="30" style="width: 98%;" rows="10"></textarea>
-                <span style="color: red"><?=$error_data['account'][0]?></span>
+                <span style="color: red"><?php if(!empty($error_data))echo $error_data['account'][0]?></span>
             </td>
         </tr>
         <tr>
