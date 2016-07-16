@@ -2,6 +2,7 @@
 
 $params = require(__DIR__ . '/params.php');
 Yii::$classMap['Vcode'] = '@app/libs/Vcode.php';
+Yii::$classMap['CheckConfig'] = '@app/libs/CheckConfig.php';
 
 $config = [
     'defaultRoute'=>'install/index',

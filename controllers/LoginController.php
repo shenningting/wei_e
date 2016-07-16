@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\User;
+use app\models\IpTable;
 use Vcode;
 use yii\captcha\CaptchaValidator;
 
@@ -50,7 +51,15 @@ class LoginController extends Controller
     public function actionLogin()
     {
 
-
+        //判断ip
+        $ip1 = $_SERVER['SERVER_ADDR'];
+        $ip_data = Iptable::find()->select('ip_name')->asArray()->all();
+        foreach($ip_data as $v){
+            $ip[] = $v['ip_name'];
+        }
+        if(!in_array($ip1,$ip)){
+            echo "<script>alert('此ip不允许访问');location.href='index.php?r=login/index'</script>";
+        }
         /*$caprcha = new CaptchaValidator();
         var_dump($caprcha);
         echo \Yii::$app->request->post('verifyCode');
@@ -72,7 +81,7 @@ class LoginController extends Controller
 
         $bool_uname = User::find() -> where(['uname'=>$user_data['uname']]) -> asArray() -> one();
         if($bool_uname){
-            if($user_data['upwd']==$bool_uname['upwd']){
+            if(md5($user_data['upwd'])==$bool_uname['upwd']){
                 //判断时间是否已到
                 $session = \YII::$app->session;
                 $session->open();

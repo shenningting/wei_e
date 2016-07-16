@@ -63,7 +63,7 @@ function menuScroll(num){
   </script>
   <title>后台首页</title>
 </head>
-<body>
+<body style="background-color: #000066">
     <div class="top">
       <div id="top_t">
         <div id="logo" class="fl"></div>
