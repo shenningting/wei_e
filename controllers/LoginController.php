@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Illuminate\Validation\Validator;
 use Yii;
 use yii\web\Controller;
 use app\models\User;
@@ -52,20 +53,16 @@ class LoginController extends Controller
     {
 
         //判断ip
-        $ip1 = $_SERVER['SERVER_ADDR'];
+       /* $ip1 = $_SERVER['SERVER_ADDR'];
         $ip_data = Iptable::find()->select('ip_name')->asArray()->all();
         foreach($ip_data as $v){
             $ip[] = $v['ip_name'];
         }
         if(!in_array($ip1,$ip)){
             echo "<script>alert('此ip不允许访问');location.href='index.php?r=login/index'</script>";
-        }
-        /*$caprcha = new CaptchaValidator();
-        var_dump($caprcha);
-        echo \Yii::$app->request->post('verifyCode');
-        var_dump($caprcha->validate(\Yii::$app->request->post('verifyCode')));die;*/
-        $user_data = \Yii::$app->request->post();
+        }*/
 
+        $user_data = \Yii::$app -> request -> post();
         $validate="";
         if(isset($user_data['verifyCode'])){
             $session = \YII::$app->session;
@@ -140,17 +137,102 @@ class LoginController extends Controller
         ];
     }
 
+    /*
+     * 发送邮件
+     */
     public function  actionSend()
     {
 
-        Yii::$app->mailer->compose()
-            ->setFrom('m18612193548@163.com')
-            ->setTo('1244426046@qq.com')
-            ->setSubject('Message subject')
-            ->setTextBody('Plain text content')
-            ->setHtmlBody('<b>傻蛋</b>')
-            ->send();
+        $user_data = \Yii::$app -> request -> post();
+
+        //验证码的验证
+        $validate="";
+        if(isset($user_data['verifyCode'])){
+            $session = \YII::$app->session;
+            $session->open();
+            $validate = $session->get('code');
+            if(strtolower($validate)!=strtolower($user_data['verifyCode'])){
+                //判断session值与用户输入的验证码是否一致;
+                echo "<script>alert('验证码输入有误');location.href='index.php?r=login/index'</script>";
+                die;
+            }
+        }
+
+        $bool = User::find() -> where(['uname'=>$user_data['uname']]) -> orWhere(['email'=>$user_data['uname']]) ->asArray() -> one();
+        if($bool){
+            $key = md5($bool['uname']."+".$bool['upwd']);
+            $string=base64_encode($bool['uname']."+shen");
+            $now_time=base64_encode(time()."+shen");
+            $url = substr('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],0,strpos('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],'we'))."wei_e/web/index.php?r=login/update&key=$key&string=$string&time=$now_time";
+           $bool = Yii::$app->mailer->compose()
+                ->setFrom('m18612193548@163.com')
+                ->setTo($bool['email'])
+                ->setSubject('Message subject')
+                ->setTextBody('Plain text content')
+                ->setHtmlBody('<b>'.$url.'</b>')
+                ->send();
+            if($bool){
+                echo "<script>alert('发送成功');location.href='https://mail.qq.com/'</script>";
+            }
+        }
     }
+
+    /*
+     * 修改密码
+     */
+    public function actionUpdate()
+    {
+        if(\Yii::$app->request->isGet) {
+            $update_data = \Yii::$app->request->get();
+            // print_r($update_data);die;
+            $str = base64_decode($update_data['string']);
+            $time = base64_decode($update_data['key']);
+            $uname = explode('+', $str);
+            $time = explode('+', $time);
+            $user_data = User::find()->where(['uname' => $uname])->asArray()->one();
+            $key = md5($user_data['uname'] . "+" . $user_data['upwd']);
+            if ($key == $update_data['key'] && time() - $time[0] > 3600) {
+                return $this->renderPartial('update', ['uname' => $user_data['uname']]);
+            } else {
+                echo "<script>alert('链接失效');location.href='index.php?r=login/index'</script>";
+            }
+        }else {
+            $user_data1 = \Yii::$app->request->post();
+//            print_r($user_data1);die;
+
+            $model = User::find()->where(['uname' => $user_data1['uname']]) ->one();
+            $model -> upwd = md5($user_data1['upwd1']);
+//            $model -> attributes = \Yii::$app->request->post();
+           // $model -> upwd = $user_data1['pwd'];
+            if($user_data1['upwd']==$user_data1['upwd1']){
+                $bool = $model->save();
+                if($bool){
+                    echo "<script>alert('修改成功');location.href='index.php?r=login/index'</script>";
+                }
+            }else{
+                $error_data = $model -> getErrors();
+                return $this -> renderPartial('update',['error_data'=>$error_data]);
+            }
+        }
+    }
+
+    /*
+     *  检测是否存在
+     */
+    public function actionCheck_uname()
+    {
+        $uname = \Yii::$app -> request -> get('uname');
+        $bool = User::find() -> where(['uname'=>$uname]) -> orWhere(['email'=>$uname]) ->asArray() -> one();
+        if($bool){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+
+    /*
+     * 退出
+     */
     public function actionLogout()
     {
         $session = \YII::$app->session;

@@ -36,6 +36,7 @@ class InstallController extends \yii\web\Controller
         $pwd=$post['dbpwd'];
         $db=$post['db'];
         $uname=$post['uname'];
+        $email=$post['email'];
         $upwd=$post['upwd'];
         //echo $name,$pwd;die;
         if (@$link= mysql_connect("$host","$name","$pwd")){
@@ -97,7 +98,7 @@ class InstallController extends \yii\web\Controller
 
             file_put_contents('./assets/abc.php',$str1);
             $newpwd = md5($upwd);
-            $sql1="insert into we_user(uname,upwd) VALUES ('$uname','$newpwd')";
+            $sql1="insert into we_user(uname,upwd,email) VALUES ('$uname','$newpwd','$email')";
             mysql_query($sql1);
 
             $ip1 = $_SERVER['SERVER_ADDR'];

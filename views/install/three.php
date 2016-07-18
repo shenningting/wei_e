@@ -67,6 +67,11 @@
     <td>&nbsp;</td>
 </tr>
 <tr>
+    <th class="tbopt">&nbsp;创始人邮箱:</th>
+    <td><input name="email" value="" size="35" class="txt" type="text"></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
     <th class="tbopt">&nbsp;创始人密码:</th>
     <td><input name="upwd" value="" size="35" class="txt" type="password"></td>
     <td>&nbsp;</td>

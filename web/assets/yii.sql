@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-07-16 14:13:10
+Date: 2016-07-18 07:56:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,7 +67,7 @@ CREATE TABLE `we_ip_table` (
   `ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `ip_name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`ip_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of we_ip_table
@@ -130,8 +130,9 @@ CREATE TABLE `we_user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `uname` varchar(30) NOT NULL,
   `upwd` varchar(50) NOT NULL,
+  `email` varchar(30) NOT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of we_user
