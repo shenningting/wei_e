@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\CCaptcha;
 
 /**
  * This is the model class for table "we_user".
@@ -11,6 +10,7 @@ use app\models\CCaptcha;
  * @property integer $uid
  * @property string $uname
  * @property string $upwd
+ * @property string $email
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -28,10 +28,9 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uname', 'upwd'], 'required'],
-            [['uname'], 'string', 'max' => 30],
-            [['upwd'], 'string', 'max' => 50],
-            ['verifyCode', 'captcha'],
+            [['uname', 'upwd', 'email'], 'required'],
+            [['uname', 'email'], 'string', 'max' => 30],
+            [['upwd'], 'string', 'max' => 50]
         ];
     }
 
@@ -44,7 +43,7 @@ class User extends \yii\db\ActiveRecord
             'uid' => 'Uid',
             'uname' => 'Uname',
             'upwd' => 'Upwd',
-            'verifyCode' => '验证码',
+            'email' => 'Email',
         ];
     }
 }
